@@ -28,11 +28,13 @@ public class ScreenManager {
     }
     public void addConfig(String instanceName,EnumConfigType type, String category, String name, Object defaultValue){
         instances.get(instanceName).addConfig(type,category,name,defaultValue);
-        Logger.getGlobal().log(Level.INFO,"added" + name + "to" + instanceName);
     }
     public void addConfigLimit(String instanceName,EnumConfigType type,String category,String name,Object defaultValue,Object max,Object min){
         instances.get(instanceName).addConfigLimit(type,category,name,defaultValue,max,min);
-        Logger.getGlobal().log(Level.INFO,"added" + name + "to" + instanceName);
+    }
+    public void addConfigEnum(String instanceName,EnumConfigType type,String category,String name,Object defaultValue,Class<? extends Enum<?>> enumClass){
+        instances.get(instanceName).addConfigEnum(type,category,name,defaultValue,enumClass);
+        System.out.println("addedEnum");
     }
     public void autoAdd(Class<?> clazz){
         try{
@@ -64,6 +66,10 @@ public class ScreenManager {
                         addConfig(classCategoryString,EnumConfigType.DOUBLE, clazz.getSimpleName(), field.getName(),field.get(null));
                         navigate.put(classCategoryString + "." + clazz.getSimpleName() + "." + field.getName(),field);
                     }
+                    if(field.getType().isEnum()){
+                        addConfigEnum(classCategoryString,EnumConfigType.ENUM,clazz.getSimpleName(),field.getName(),field.get(null), (Class<? extends Enum<?>>) field.getType());
+                        navigate.put(classCategoryString + "." + clazz.getSimpleName() + "." + field.getName(),field);
+                    }
                 }
                 if(field.isAnnotationPresent(LimitConfigEntry.class)){
                     if(!instances.containsKey(classCategoryString)){
@@ -90,6 +96,18 @@ public class ScreenManager {
         Minecraft.getMinecraft().displayGuiScreen(wrapper);
     }
     public void makeDirty(String configName,String name,Object value){
+        if(instances.get(configName).configList.get(name.split("\\.")[1]).type == EnumConfigType.ENUM){
+            Optional<? extends Enum<?>> enumOptional = Arrays.stream(((ConfigInstance.ConfigEntryEnum) instances.get(configName).configList.get(name.split("\\.")[1])).enumClass.getEnumConstants()).filter(it -> it.toString().equals(value.toString())).findFirst();
+            if(enumOptional.isPresent()){
+                Enum<?> enumValue = enumOptional.get();
+                Field field = navigate.get(configName + "." + name);
+                field.setAccessible(true);
+                try {
+                    field.set(null, enumValue);
+                }   catch(Exception | Error ignored){}
+            }
+            return;
+        }
         try {
             Field field = navigate.get(configName + "." + name);
             field.setAccessible(true);

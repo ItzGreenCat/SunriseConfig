@@ -30,7 +30,7 @@ public abstract class InputComponent<T> extends Component<T> {
         Scissor.enableScissor();
         Scissor.cut(getXCoord() + getWidth() - 153,getYCoord(),150,getHeight());
         field.drawText(getXCoord() + getWidth() - 150,getYCoord() + getHeight() / 2 - 5,Color.BLACK);
-        Gui.drawRect(getXCoord() + getWidth() - 153,getYCoord() + getHeight() / 2 + 5,getXCoord() + getWidth() - 5,getYCoord() + getHeight() / 2 + 7,Color.BLACK.getRGB());
+        Gui.drawRect(getXCoord() + getWidth() - 153,getYCoord() + getHeight() / 2 + 5,getXCoord() + getWidth() - 5,getYCoord() + getHeight() / 2 + 6,Color.BLACK.getRGB());
         Scissor.disableScissor();
     }
     public String getText(){

@@ -1,14 +1,8 @@
 package me.greencat.dev;
 
 import me.greencat.src.ScreenManager;
-import me.greencat.src.SunriseConfig;
-import me.greencat.src.component.Screen;
-import me.greencat.src.component.ScreenWrapper;
-import me.greencat.src.config.ConfigInstance;
-import me.greencat.src.config.EnumConfigType;
 import me.greencat.src.utils.ClassCategory;
 import me.greencat.src.utils.ConfigEntry;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
@@ -19,7 +13,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.InputEvent;
 import org.lwjgl.input.Keyboard;
 
-@ClassCategory("test")
+@ClassCategory("test1")
 @Mod(modid = SunriseConfigDevelopment.MODID, version = SunriseConfigDevelopment.VERSION,name = "SunriseConfigDevelopmentTestModFile")
 public class SunriseConfigDevelopment
 {
@@ -38,6 +32,9 @@ public class SunriseConfigDevelopment
     public static String c = "sagsag";
     @ConfigEntry
     public static Boolean d = true;
+
+    @ConfigEntry
+    public static EnumTest testEnum = EnumTest.TEST1;
 
 
     static {

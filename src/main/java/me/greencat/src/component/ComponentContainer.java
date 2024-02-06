@@ -31,7 +31,7 @@ public class ComponentContainer {
     public void setParent(Screen screen){
         this.parent = screen;
     }
-    public void addComponent(Component component){
+    public void addComponent(Component<?> component){
         component.setContainer(this).setYCoord(y + componentLength);
         components.add(component);
         componentLength = componentLength + component.getHeight();

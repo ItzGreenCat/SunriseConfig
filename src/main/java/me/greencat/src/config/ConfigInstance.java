@@ -27,6 +27,9 @@ public class ConfigInstance {
     public void addConfigLimit(EnumConfigType type,String category,String name,Object defaultValue,Object max,Object min){
         configList.put(name,new ConfigEntryLimit(type,category,name,defaultValue,max,min));
     }
+    public void addConfigEnum(EnumConfigType type,String category,String name,Object defaultValue,Class<? extends Enum<?>> enumClass){
+        configList.put(name,new ConfigEntryEnum(type,category,name,defaultValue,enumClass));
+    }
     public Screen generateGui(){
         GlobalContainerCache.containerHashMap.clear();
         Screen screen = new Screen();
@@ -69,6 +72,11 @@ public class ConfigInstance {
                         component.name = entry.getValue().name;
                         container.addComponent(component);
                     }
+                    if(entry.getValue().type == EnumConfigType.ENUM){
+                        EnumComponent component = new EnumComponent(() -> fileInstance.getString(entry.getValue().category + "." + entry.getValue().name,entry.getValue().defaultValue.toString()), it -> fileInstance.setString(entry.getValue().category + "." + entry.getValue().name,it, entry.getValue().defaultValue.toString()),((ConfigEntryEnum) entry.getValue()).enumClass);
+                        component.name = entry.getValue().name;
+                        container.addComponent(component);
+                    }
                     if(entry.getValue().type == EnumConfigType.LIMIT_DOUBLE && entry.getValue() instanceof ConfigEntryLimit){
                         LimitDoubleComponent component = new LimitDoubleComponent(() -> fileInstance.getDouble(entry.getValue().category + "." + entry.getValue().name, (Double) entry.getValue().defaultValue), it -> fileInstance.setDouble(entry.getValue().category + "." + entry.getValue().name,it, (Double) entry.getValue().defaultValue),(Double)((ConfigEntryLimit) entry.getValue()).maxValue,(Double)((ConfigEntryLimit) entry.getValue()).minValue);
                         component.name = entry.getValue().name;
@@ -106,6 +114,14 @@ public class ConfigInstance {
             super(type,category,name,defaultValue);
             this.maxValue = maxValue;
             this.minValue = minValue;
+        }
+    }
+    public static class ConfigEntryEnum extends ConfigEntry{
+        public final Class<? extends Enum<?>> enumClass;
+
+        public ConfigEntryEnum(EnumConfigType type, String category, String name, Object defaultValue,Class<? extends Enum<?>> enumClass) {
+            super(type, category, name, defaultValue);
+            this.enumClass = enumClass;
         }
     }
     public Boolean getBoolean(String name){
