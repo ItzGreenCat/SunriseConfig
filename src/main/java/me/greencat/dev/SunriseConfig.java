@@ -3,7 +3,6 @@ package me.greencat.dev;
 import me.greencat.src.utils.ClassCategory;
 import me.greencat.src.utils.LimitConfigEntry;
 
-@ClassCategory("test1")
 public class SunriseConfig {
     @LimitConfigEntry(max = "200",min = "20")
     public static Integer intTest = 60;
