@@ -1,5 +1,7 @@
 package me.greencat.src.component;
 
+import me.greencat.src.animation.AnimationEngine;
+import me.greencat.src.animation.AnimationManager;
 import me.greencat.src.utils.render.Scissor;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.renderer.GlStateManager;
@@ -18,6 +20,7 @@ public class ComponentContainer {
     public int componentLength = 0;
     public String name;
     public Screen parent;
+    private final AnimationEngine animationEngine;
 
     public final EnumSpacialContainer special;
     public ComponentContainer(int x,int y,int width,int height,String name,EnumSpacialContainer special){
@@ -27,6 +30,7 @@ public class ComponentContainer {
         this.height = height;
         this.name = name;
         this.special = special;
+        this.animationEngine = new AnimationEngine();
     }
     public void setParent(Screen screen){
         this.parent = screen;
@@ -43,6 +47,7 @@ public class ComponentContainer {
         } else if(special == EnumSpacialContainer.CONFIG){
             Gui.drawRect(x,y,x + width,y + height,-855310);
         }
+        scrollOffset = (int) animationEngine.xCoord;
         Scissor.enableScissor();
         Scissor.cut(x,y,width,height);
         GlStateManager.pushMatrix();
@@ -59,9 +64,9 @@ public class ComponentContainer {
     }
     public void onMouseScroll(int value){
         if(value < 0) {
-            scrollOffset = Math.min(scrollOffset + 10,Math.max(componentLength - height,0));
+            animationEngine.moveTo(Math.min(scrollOffset + 10,Math.max(componentLength - height,0)),0,0.3,AnimationEngine.EASE_OUT);
         } else if(value > 0) {
-            scrollOffset = Math.max(scrollOffset - 10,0);
+            animationEngine.moveTo(Math.max(scrollOffset - 10,0),0,0.3,AnimationEngine.EASE_OUT);
         }
     }
     public void onMousePress(int mouseX,int mouseY,EnumMouseButton button){

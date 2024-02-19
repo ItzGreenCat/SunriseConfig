@@ -8,6 +8,7 @@ import me.greencat.src.component.config.*;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -74,6 +75,11 @@ public class ConfigInstance {
                     }
                     if(entry.getValue().type == EnumConfigType.ENUM){
                         EnumComponent component = new EnumComponent(() -> fileInstance.getString(entry.getValue().category + "." + entry.getValue().name,entry.getValue().defaultValue.toString()), it -> fileInstance.setString(entry.getValue().category + "." + entry.getValue().name,it, entry.getValue().defaultValue.toString()),((ConfigEntryEnum) entry.getValue()).enumClass);
+                        component.name = entry.getValue().name;
+                        container.addComponent(component);
+                    }
+                    if(entry.getValue().type == EnumConfigType.COLOR){
+                        ColorComponent component = new ColorComponent(() -> fileInstance.getInt(entry.getValue().category + "." + entry.getValue().name, entry.getValue().defaultValue.equals(Color.BLACK) ? -2 : entry.getValue().defaultValue.equals(Color.WHITE) ? -1 : (int) (ColorComponent.rgbToHsv((Color) entry.getValue().defaultValue)[0] * 360.0F)), it -> fileInstance.setInt(entry.getValue().category + "." + entry.getValue().name,it,entry.getValue().defaultValue.equals(Color.BLACK) ? -2 : entry.getValue().defaultValue.equals(Color.WHITE) ? -1 : (int) (ColorComponent.rgbToHsv((Color) entry.getValue().defaultValue)[0] * 360.0F)));
                         component.name = entry.getValue().name;
                         container.addComponent(component);
                     }

@@ -1,6 +1,7 @@
 package me.greencat.src.component.config;
 
 import me.greencat.src.Translation;
+import me.greencat.src.animation.AnimationEngine;
 import me.greencat.src.component.Component;
 import me.greencat.src.component.EnumMouseButton;
 import net.minecraft.client.Minecraft;
@@ -18,9 +19,11 @@ import java.util.function.Supplier;
 
 public class BooleanComponent extends Component<Boolean> {
     boolean currentStatus;
+    private final AnimationEngine animationEngine;
     public BooleanComponent(Supplier<Boolean> baseValueGetter, Consumer<Boolean> valueSetter) {
         super(baseValueGetter, valueSetter);
         currentStatus = baseValueGetter.get();
+        animationEngine = new AnimationEngine(currentStatus ? 15 : 30,0);
     }
 
     @Override
@@ -56,7 +59,7 @@ public class BooleanComponent extends Component<Boolean> {
             worldRenderer2.begin(9, DefaultVertexFormats.POSITION);
             GlStateManager.color(80.0F / 255.0F,124F / 255F, 1.0f, 1.0f);
             for(int i = 360;i > 0;i--){
-                worldRenderer2.pos((float) ((getXCoord() + getWidth() - 15) + Math.cos((float)(i) * Math.PI / 180.0F) * 7), (float) ((getYCoord() + getHeight() / 2) + Math.sin((float)(i) * Math.PI / 180.0F) * 7),0.0F).endVertex();
+                worldRenderer2.pos((float) ((getXCoord() + getWidth() - animationEngine.xCoord) + Math.cos((float)(i) * Math.PI / 180.0F) * 7), (float) ((getYCoord() + getHeight() / 2) + Math.sin((float)(i) * Math.PI / 180.0F) * 7),0.0F).endVertex();
             }
             tessellator.draw();
         } else {
@@ -82,7 +85,7 @@ public class BooleanComponent extends Component<Boolean> {
             worldRenderer2.begin(9, DefaultVertexFormats.POSITION);
             GlStateManager.color(156F / 255.0F,156F / 255F, 156F / 255F,1.0F);
             for(int i = 360;i > 0;i--){
-                worldRenderer2.pos((float) ((getXCoord() + getWidth() - 30) + Math.cos((float)(i) * Math.PI / 180.0F) * 7), (float) ((getYCoord() + getHeight() / 2) + Math.sin((float)(i) * Math.PI / 180.0F) * 7),0.0F).endVertex();
+                worldRenderer2.pos((float) ((getXCoord() + getWidth() - animationEngine.xCoord) + Math.cos((float)(i) * Math.PI / 180.0F) * 7), (float) ((getYCoord() + getHeight() / 2) + Math.sin((float)(i) * Math.PI / 180.0F) * 7),0.0F).endVertex();
             }
             tessellator.draw();
         }
@@ -96,6 +99,11 @@ public class BooleanComponent extends Component<Boolean> {
         if(isMouseInRange(mouseX,mouseY)) {
             currentStatus = !currentStatus;
             valueSetter.accept(currentStatus);
+            if(currentStatus){
+                animationEngine.moveTo(15,0,0.3,AnimationEngine.EASE_OUT);
+            } else {
+                animationEngine.moveTo(30,0,0.3,AnimationEngine.EASE_OUT);
+            }
         }
     }
 

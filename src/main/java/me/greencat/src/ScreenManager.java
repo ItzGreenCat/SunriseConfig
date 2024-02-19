@@ -2,13 +2,16 @@ package me.greencat.src;
 
 import me.greencat.src.component.Screen;
 import me.greencat.src.component.ScreenWrapper;
+import me.greencat.src.component.config.ColorComponent;
 import me.greencat.src.config.ConfigInstance;
 import me.greencat.src.config.EnumConfigType;
 import me.greencat.src.utils.ClassCategory;
 import me.greencat.src.utils.ConfigEntry;
 import me.greencat.src.utils.LimitConfigEntry;
 import net.minecraft.client.Minecraft;
+import scala.Int;
 
+import java.awt.*;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.util.Arrays;
@@ -69,6 +72,10 @@ public class ScreenManager {
                             addConfig(classCategoryString, EnumConfigType.DOUBLE, classSimpleName, field.getName(), field.get(null));
                             navigate.put(classCategoryString + "." + classSimpleName + "." + field.getName(), field);
                         }
+                        if(field.getType() == Color.class){
+                            addConfig(classCategoryString, EnumConfigType.COLOR, classSimpleName, field.getName(), field.get(null));
+                            navigate.put(classCategoryString + "." + classSimpleName + "." + field.getName(), field);
+                        }
                         if (field.getType().isEnum()) {
                             addConfigEnum(classCategoryString, EnumConfigType.ENUM, classSimpleName, field.getName(), field.get(null), (Class<? extends Enum<?>>) field.getType());
                             navigate.put(classCategoryString + "." + classSimpleName + "." + field.getName(), field);
@@ -120,7 +127,7 @@ public class ScreenManager {
         for(Map.Entry<String,ConfigInstance> instance : instances.entrySet()){
             ConfigInstance config = instance.getValue();
             for(ConfigInstance.ConfigEntry entry : config.configList.values()){
-                makeDirty(config.fileInstance.configName,entry.category + "." + entry.name,entry.type == EnumConfigType.BOOLEAN ? config.fileInstance.getBoolean(entry.category + "." + entry.name, (Boolean) entry.defaultValue) : (entry.type == EnumConfigType.STRING || entry.type == EnumConfigType.ENUM) ? entry.type == EnumConfigType.STRING ? config.fileInstance.getString(entry.category + "." + entry.name, (String) entry.defaultValue) : getEnumByEnumClass(((ConfigInstance.ConfigEntryEnum)entry).enumClass,config.fileInstance.getString(entry.category + "." + entry.name,entry.defaultValue.toString())) : (entry.type == EnumConfigType.INTEGER || entry.type == EnumConfigType.LIMIT_INTEGER) ? config.fileInstance.getInt(entry.category + "." + entry.name, (Integer) entry.defaultValue) : (entry.type == EnumConfigType.DOUBLE || entry.type == EnumConfigType.LIMIT_DOUBLE) ? config.fileInstance.getDouble(entry.category + "." + entry.name, (Double) entry.defaultValue) : null);
+                makeDirty(config.fileInstance.configName,entry.category + "." + entry.name,entry.type == EnumConfigType.BOOLEAN ? config.fileInstance.getBoolean(entry.category + "." + entry.name, (Boolean) entry.defaultValue) : (entry.type == EnumConfigType.STRING || entry.type == EnumConfigType.ENUM) ? entry.type == EnumConfigType.STRING ? config.fileInstance.getString(entry.category + "." + entry.name, (String) entry.defaultValue) : getEnumByEnumClass(((ConfigInstance.ConfigEntryEnum)entry).enumClass,config.fileInstance.getString(entry.category + "." + entry.name,entry.defaultValue.toString())) : (entry.type == EnumConfigType.INTEGER || entry.type == EnumConfigType.LIMIT_INTEGER) ? config.fileInstance.getInt(entry.category + "." + entry.name, (Integer) entry.defaultValue) : (entry.type == EnumConfigType.DOUBLE || entry.type == EnumConfigType.LIMIT_DOUBLE) ? config.fileInstance.getDouble(entry.category + "." + entry.name, (Double) entry.defaultValue) : entry.type == EnumConfigType.COLOR ? config.fileInstance.getInt(entry.category + "." + entry.name, entry.defaultValue.equals(Color.BLACK) ? -2 : entry.defaultValue.equals(Color.WHITE) ? -1 : (int) (ColorComponent.rgbToHsv((Color) entry.defaultValue)[0])) : null);
             }
         }
     }
@@ -144,6 +151,20 @@ public class ScreenManager {
                 }   catch(Exception | Error ignored){}
             }
             return;
+        }
+        if(instances.get(configName).configList.get(name.split("\\.")[1]).type == EnumConfigType.COLOR){
+            try {
+                Field field = navigate.get(configName + "." + name);
+                field.setAccessible(true);
+                if(String.valueOf(value).equals("-1") || String.valueOf(value).equals("-1.0")) {
+                    field.set(null,Color.WHITE);
+                } else if(String.valueOf(value).equals("-2") || String.valueOf(value).equals("-2.0")) {
+                    field.set(null,Color.BLACK);
+                } else {
+                    field.set(null, Color.getHSBColor((((Number)(value)).floatValue() / 360.0F), 1.0F, 1.0F));
+                }
+            } catch(Exception | Error ignored) {
+            }
         }
         try {
             Field field = navigate.get(configName + "." + name);
