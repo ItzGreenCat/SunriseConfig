@@ -1,5 +1,6 @@
 package me.greencat.src.component.config;
 
+import me.greencat.src.Translation;
 import me.greencat.src.component.EnumMouseButton;
 import me.greencat.src.component.SlideComponent;
 import net.minecraft.client.Minecraft;
@@ -49,7 +50,7 @@ public class LimitIntegerComponent extends SlideComponent<Integer> {
         tessellator.draw();
         GlStateManager.enableTexture2D();
         GlStateManager.disableBlend();
-        Minecraft.getMinecraft().fontRendererObj.drawString(this.name,getXCoord() + 3,getYCoord() + getHeight() / 2 - 5,Color.BLACK.getRGB());
+        Minecraft.getMinecraft().fontRendererObj.drawString(Translation.get(this.container.name + "." + this.name),getXCoord() + 3,getYCoord() + getHeight() / 2 - 5,Color.BLACK.getRGB());
         if(isFocused){
             Minecraft.getMinecraft().fontRendererObj.drawString(String.valueOf((int) ((max - min) * getValue() + min)),(int) (getXCoord() + getWidth() - 10 - (290 * (1 - getValue()))) - (Minecraft.getMinecraft().fontRendererObj.getStringWidth(String.valueOf((int) ((max - min) * getValue() + min))) / 2),getYCoord() + getHeight() / 2 - 12,Color.BLACK.getRGB());
         }

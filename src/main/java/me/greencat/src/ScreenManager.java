@@ -73,12 +73,23 @@ public class ScreenManager {
                             addConfigEnum(classCategoryString, EnumConfigType.ENUM, classSimpleName, field.getName(), field.get(null), (Class<? extends Enum<?>>) field.getType());
                             navigate.put(classCategoryString + "." + classSimpleName + "." + field.getName(), field);
                         }
+                        ConfigEntry annotation = field.getAnnotation(ConfigEntry.class);
+                        if(!annotation.value().equals("dummyThing")){
+                            Translation.add(classSimpleName + "." + field.getName(),annotation.value());
+                        } else {
+                            Translation.add(classSimpleName + "." + field.getName(),field.getName());
+                        }
                     }
                     if (field.isAnnotationPresent(LimitConfigEntry.class)) {
                         if (!instances.containsKey(classCategoryString)) {
                             createInstance(classCategoryString);
                         }
                         LimitConfigEntry annotation = field.getAnnotation(LimitConfigEntry.class);
+                        if(!annotation.value().equals("dummyThing")){
+                            Translation.add(classSimpleName + "." + field.getName(),annotation.value());
+                        } else {
+                            Translation.add(classSimpleName + "." + field.getName(),field.getName());
+                        }
                         if (field.getType() == Integer.class) {
                             addConfigLimit(classCategoryString, EnumConfigType.LIMIT_INTEGER, classSimpleName, field.getName(), field.get(null), Integer.parseInt(annotation.max()), Integer.parseInt(annotation.min()));
                             navigate.put(classCategoryString + "." + classSimpleName + "." + field.getName(), field);

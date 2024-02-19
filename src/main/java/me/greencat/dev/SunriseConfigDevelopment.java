@@ -15,7 +15,7 @@ import net.minecraftforge.fml.common.gameevent.TickEvent;
 import org.lwjgl.input.Keyboard;
 
 @ClassCategory("test1")
-@Mod(modid = SunriseConfigDevelopment.MODID, version = SunriseConfigDevelopment.VERSION,name = "SunriseConfigDevelopmentTestModFile")
+//@Mod(modid = SunriseConfigDevelopment.MODID, version = SunriseConfigDevelopment.VERSION,name = "SunriseConfigDevelopmentTestModFile")
 public class SunriseConfigDevelopment extends SunriseConfig
 {
     public static final String MODID = "sunrisedevelopment";
@@ -24,17 +24,17 @@ public class SunriseConfigDevelopment extends SunriseConfig
 
     public static ScreenManager config = new ScreenManager();
 
-    @ConfigEntry
+    @ConfigEntry("这是Double")
     public static Double a = 231515D;
-    @ConfigEntry
+    @ConfigEntry("String测试")
     public static String b = "sagasgasg";
 
-    @ConfigEntry
+    @ConfigEntry("第二个String测试")
     public static String c = "sagsag";
-    @ConfigEntry
+    @ConfigEntry("测试d")
     public static Boolean d = true;
 
-    @ConfigEntry
+    @ConfigEntry("枚举")
     public static EnumTest testEnum = EnumTest.TEST1;
 
 

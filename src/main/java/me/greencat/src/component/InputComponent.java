@@ -1,5 +1,6 @@
 package me.greencat.src.component;
 
+import me.greencat.src.Translation;
 import me.greencat.src.component.Component;
 import me.greencat.src.component.EnumMouseButton;
 import me.greencat.src.utils.render.Scissor;
@@ -26,7 +27,7 @@ public abstract class InputComponent<T> extends Component<T> {
     @Override
     public void render(int mouseX, int mouseY, float tickDelta) {
         Gui.drawRect(getXCoord(),getYCoord(),getXCoord() + getWidth(),getHeight() + getYCoord(),-855310);
-        Minecraft.getMinecraft().fontRendererObj.drawString(this.name,getXCoord() + 3,getYCoord() + getHeight() / 2 - 5,Color.BLACK.getRGB());
+        Minecraft.getMinecraft().fontRendererObj.drawString(Translation.get(this.container.name + "." + this.name),getXCoord() + 3,getYCoord() + getHeight() / 2 - 5,Color.BLACK.getRGB());
         Scissor.enableScissor();
         Scissor.cut(getXCoord() + getWidth() - 153,getYCoord(),150,getHeight());
         field.drawText(getXCoord() + getWidth() - 150,getYCoord() + getHeight() / 2 - 5,Color.BLACK);

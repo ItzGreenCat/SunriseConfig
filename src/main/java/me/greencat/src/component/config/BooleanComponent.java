@@ -1,5 +1,6 @@
 package me.greencat.src.component.config;
 
+import me.greencat.src.Translation;
 import me.greencat.src.component.Component;
 import me.greencat.src.component.EnumMouseButton;
 import net.minecraft.client.Minecraft;
@@ -30,7 +31,7 @@ public class BooleanComponent extends Component<Boolean> {
     @Override
     public void render(int mouseX, int mouseY, float tickDelta) {
         Gui.drawRect(getXCoord(),getYCoord(),getXCoord() + getWidth(),getHeight() + getYCoord(),-855310);
-        Minecraft.getMinecraft().fontRendererObj.drawString(this.name,getXCoord() + 3,getYCoord() + getHeight() / 2 - 5,Color.BLACK.getRGB());
+        Minecraft.getMinecraft().fontRendererObj.drawString(Translation.get(this.container.name + "." + this.name),getXCoord() + 3,getYCoord() + getHeight() / 2 - 5,Color.BLACK.getRGB());
         GL11.glEnable(GL11.GL_LINE_SMOOTH);
         if(currentStatus){
             Gui.drawRect(getXCoord() + getWidth() - 30, (int) (getYCoord() + getHeight() * 0.35),getXCoord() + getWidth() - 15, (int) (getYCoord() + getHeight() * 0.68),2019213055);

@@ -7,4 +7,5 @@ import java.lang.annotation.RetentionPolicy;
 public @interface LimitConfigEntry {
     String max();
     String min();
+    String value() default "dummyThing";
 }
