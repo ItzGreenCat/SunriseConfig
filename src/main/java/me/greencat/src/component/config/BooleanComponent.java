@@ -46,13 +46,13 @@ public class BooleanComponent extends Component<Boolean> {
             WorldRenderer worldRenderer = tessellator.getWorldRenderer();
             worldRenderer.begin(9, DefaultVertexFormats.POSITION);
             for(int i = 90;i > -90;i--){
-                worldRenderer.pos((float) ((getXCoord() + getWidth() - 15) + Math.cos((float)(i) * Math.PI / 180.0F) * 4.5), (float) ((getYCoord() + getHeight() / 2) + Math.sin((float)(i) * Math.PI / 180.0F) * 4.5),0.0F).endVertex();
+                worldRenderer.pos((float) ((getXCoord() + getWidth() - 15) + Math.cos((float)(i) * Math.PI / 180.0F) * 5), (float) ((getYCoord() + getHeight() / 2) + Math.sin((float)(i) * Math.PI / 180.0F) * 5),0.0F).endVertex();
             }
             tessellator.draw();
             WorldRenderer worldRenderer1 = tessellator.getWorldRenderer();
             worldRenderer1.begin(9, DefaultVertexFormats.POSITION);
             for(int i = 270;i > 90;i--){
-                worldRenderer1.pos((float) ((getXCoord() + getWidth() - 30) + Math.cos((float)(i) * Math.PI / 180.0F) * 4.5), (float) ((getYCoord() + getHeight() / 2) + Math.sin((float)(i) * Math.PI / 180.0F) * 4.5),0.0F).endVertex();
+                worldRenderer1.pos((float) ((getXCoord() + getWidth() - 30) + Math.cos((float)(i) * Math.PI / 180.0F) * 5), (float) ((getYCoord() + getHeight() / 2) + Math.sin((float)(i) * Math.PI / 180.0F) * 5),0.0F).endVertex();
             }
             tessellator.draw();
             WorldRenderer worldRenderer2 = tessellator.getWorldRenderer();
@@ -72,13 +72,13 @@ public class BooleanComponent extends Component<Boolean> {
             WorldRenderer worldRenderer = tessellator.getWorldRenderer();
             worldRenderer.begin(9, DefaultVertexFormats.POSITION);
             for(int i = 90;i > -90;i--){
-                worldRenderer.pos((float) ((getXCoord() + getWidth() - 15) + Math.cos((float)(i) * Math.PI / 180.0F) * 4.5), (float) ((getYCoord() + getHeight() / 2) + Math.sin((float)(i) * Math.PI / 180.0F) * 4.5),0.0F).endVertex();
+                worldRenderer.pos((float) ((getXCoord() + getWidth() - 15) + Math.cos((float)(i) * Math.PI / 180.0F) * 5), (float) ((getYCoord() + getHeight() / 2) + Math.sin((float)(i) * Math.PI / 180.0F) * 5),0.0F).endVertex();
             }
             tessellator.draw();
             WorldRenderer worldRenderer1 = tessellator.getWorldRenderer();
             worldRenderer1.begin(9, DefaultVertexFormats.POSITION);
             for(int i = 270;i > 90;i--){
-                worldRenderer1.pos((float) ((getXCoord() + getWidth() - 30) + Math.cos((float)(i) * Math.PI / 180.0F) * 4.5), (float) ((getYCoord() + getHeight() / 2) + Math.sin((float)(i) * Math.PI / 180.0F) * 4.5),0.0F).endVertex();
+                worldRenderer1.pos((float) ((getXCoord() + getWidth() - 30) + Math.cos((float)(i) * Math.PI / 180.0F) * 5), (float) ((getYCoord() + getHeight() / 2) + Math.sin((float)(i) * Math.PI / 180.0F) * 5),0.0F).endVertex();
             }
             tessellator.draw();
             WorldRenderer worldRenderer2 = tessellator.getWorldRenderer();
