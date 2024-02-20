@@ -20,7 +20,7 @@ import org.lwjgl.input.Keyboard;
 import java.awt.*;
 
 @ClassCategory("test1")
-@Mod(modid = SunriseConfigDevelopment.MODID, version = SunriseConfigDevelopment.VERSION,name = "SunriseConfigDevelopmentTestModFile")
+//@Mod(modid = SunriseConfigDevelopment.MODID, version = SunriseConfigDevelopment.VERSION,name = "SunriseConfigDevelopmentTestModFile")
 public class SunriseConfigDevelopment extends SunriseConfig
 {
     public static final String MODID = "sunrisedevelopment";
