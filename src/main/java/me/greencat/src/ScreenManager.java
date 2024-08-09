@@ -9,7 +9,6 @@ import me.greencat.src.utils.ClassCategory;
 import me.greencat.src.utils.ConfigEntry;
 import me.greencat.src.utils.LimitConfigEntry;
 import net.minecraft.client.Minecraft;
-import scala.Int;
 
 import java.awt.*;
 import java.lang.annotation.Annotation;
@@ -19,8 +18,6 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicReference;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class ScreenManager {
     LinkedHashMap<String,ConfigInstance> instances = new LinkedHashMap<>();
@@ -140,8 +137,8 @@ public class ScreenManager {
         return null;
     }
     public void makeDirty(String configName,String name,Object value){
-        if(instances.get(configName).configList.get(name.split("\\.")[1]).type == EnumConfigType.ENUM){
-            Optional<? extends Enum<?>> enumOptional = Arrays.stream(((ConfigInstance.ConfigEntryEnum) instances.get(configName).configList.get(name.split("\\.")[1])).enumClass.getEnumConstants()).filter(it -> it.toString().equals(value.toString())).findFirst();
+        if(instances.get(configName).configList.get(name).type == EnumConfigType.ENUM){
+            Optional<? extends Enum<?>> enumOptional = Arrays.stream(((ConfigInstance.ConfigEntryEnum) instances.get(configName).configList.get(name)).enumClass.getEnumConstants()).filter(it -> it.toString().equals(value.toString())).findFirst();
             if(enumOptional.isPresent()){
                 Enum<?> enumValue = enumOptional.get();
                 Field field = navigate.get(configName + "." + name);
@@ -152,7 +149,7 @@ public class ScreenManager {
             }
             return;
         }
-        if(instances.get(configName).configList.get(name.split("\\.")[1]).type == EnumConfigType.COLOR){
+        if(instances.get(configName).configList.get(name).type == EnumConfigType.COLOR){
             try {
                 Field field = navigate.get(configName + "." + name);
                 field.setAccessible(true);

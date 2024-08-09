@@ -23,13 +23,13 @@ public class ConfigInstance {
         fileInstance = new ConfigureFileInstance(name);
     }
     public void addConfig(EnumConfigType type,String category,String name,Object defaultValue){
-        configList.put(name,new ConfigEntry(type,category,name,defaultValue));
+        configList.put(category + "." +  name,new ConfigEntry(type,category,name,defaultValue));
     }
     public void addConfigLimit(EnumConfigType type,String category,String name,Object defaultValue,Object max,Object min){
-        configList.put(name,new ConfigEntryLimit(type,category,name,defaultValue,max,min));
+        configList.put(category + "." +  name,new ConfigEntryLimit(type,category,name,defaultValue,max,min));
     }
     public void addConfigEnum(EnumConfigType type,String category,String name,Object defaultValue,Class<? extends Enum<?>> enumClass){
-        configList.put(name,new ConfigEntryEnum(type,category,name,defaultValue,enumClass));
+        configList.put(category + "." +  name,new ConfigEntryEnum(type,category,name,defaultValue,enumClass));
     }
     public Screen generateGui(){
         GlobalContainerCache.containerHashMap.clear();

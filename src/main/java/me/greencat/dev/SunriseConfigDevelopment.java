@@ -47,6 +47,7 @@ public class SunriseConfigDevelopment extends SunriseConfig
 
     static {
         config.autoAdd(SunriseConfigDevelopment.class);
+        config.autoAdd(SunriseConfig.class);
         config.postInitialization();
     }
     
